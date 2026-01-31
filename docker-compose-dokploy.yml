@@ -1,19 +1,6 @@
 version: "3.9"
 
 services:
-  db:
-    image: postgres:16
-    container_name: portify-db
-    restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1234
-      POSTGRES_DB: portify
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    networks:
-      - dokploy-network
-
   api:
     build: ./server
     container_name: portify-api
@@ -22,8 +9,6 @@ services:
       DATABASE_URL: "postgresql://postgres:1234@db:5432/portify?schema=public"
       JWT_SECRET: "your-super-secret-jwt-key-change-this-in-production"
       PORT: 3000
-    depends_on:
-      - db
     networks:
       - dokploy-network
 
